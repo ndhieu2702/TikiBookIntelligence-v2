@@ -23,10 +23,11 @@
 
 | Giai đoạn | Accuracy | F1 Weighted | Ghi chú |
 |-----------|----------|-------------|---------|
-| Ban đầu | 99.1% | 0.991 | ❌ Label leakage — giả |
-| Sau HDBSCAN | 80.3% | 0.768 | ✅ Clustering khách quan |
+| Ban đầu (label leakage) | 99.1% | 0.991 | ❌ Giả |
+| Sau HDBSCAN | 80.3% | 0.768 | ✅ Nhãn khách quan |
 | Sau Sentiment Simple | 80.61% | 0.7716 | ✅ Thêm từ điển tiếng Việt |
-| **Sau PhoBERT** | **80.81%** | **0.7736** | ✅ Deep Learning NLP |
+| Sau PhoBERT | 80.81% | 0.7736 | ✅ Deep Learning NLP |
+| **Sau PhoBERT + GridSearch** | **80.11%** | **0.7722** | ✅ Siêu tham số tối ưu |
 
 ### 5 Nhãn sản phẩm (HDBSCAN — 24 cụm tự động)
 
@@ -123,8 +124,10 @@ python -m streamlit run app.py
 
 ### Machine Learning
 - **HDBSCAN** — Clustering tự động, không cần đặt số cụm k
-- **Random Forest** — Model tốt nhất theo F1-score (0.7736)
-- **XGBoost** — Model tốt nhất theo Accuracy (80.81%)
+- **Random Forest** (F1 Weighted = 0.7722, sau GridSearchCV)
+  - Best params: n_estimators=50, max_depth=20, max_features='sqrt'
+- **XGBoost** (Accuracy = 80.35%, sau GridSearchCV)
+  - Best params: n_estimators=150, max_depth=8, learning_rate=0.2
 - **Decision Tree** — Model baseline để so sánh
 
 ### Deep Learning NLP
