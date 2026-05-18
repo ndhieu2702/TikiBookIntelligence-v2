@@ -3,8 +3,8 @@
 ## Mô tả dự án
 Hệ thống dự đoán và phân tích hiệu quả sản phẩm sách trên Tiki kết hợp Data Mining, Machine Learning và Deep Learning NLP (PhoBERT).
 - **Sinh viên**: Năm 3, ngành KHMT - AI, mục tiêu tốt nghiệp Xuất Sắc
-- **Dashboard cũ**: https://tikibookintelligence.streamlit.app/
-- **Repo GitHub mới**: https://github.com/ndhieu2ce/TikiBookIntelligence-v2
+- **Dashboard**: https://tikibookintelligence.streamlit.app/
+- **Repo GitHub**: https://github.com/ndhieu2ce/TikiBookIntelligence-v2
 
 ## Pipeline hoàn chỉnh
 ```
@@ -137,16 +137,17 @@ FEATURES = [
 - `train_product_classifier.py` tự override sentiment_simple bằng PhoBERT
 - Output: `data/tiki_books_sentiment_phobert.csv`
 
-### 6. GridSearchCV (thêm 2026-05-17)
+### 6. GridSearchCV
 - File: `train_product_classifier.py`
 - Random Forest: 18 cấu hình × 5-fold = 90 lần train
 - XGBoost: 27 cấu hình × 5-fold = 135 lần train
 - Kết quả lưu: `data/gridsearch_rf.csv`, `data/gridsearch_xgb.csv`
 
-### 7. Dashboard (app.py)
+### 7. Dashboard (app.py) — hoàn chỉnh
 - 8 trang hoàn chỉnh
+- Trang Mô hình dự đoán: mô tả đúng 6 features thực tế
+- Trang Kết luận: bảng hành trình đọc động từ model_comparison.csv (không hardcode)
 - Trang Dự đoán: hướng dẫn 3 bước + ví dụ link + card 5 nhãn
-- Trang Kết luận: bảng hành trình + so sánh Sentiment Simple vs PhoBERT
 - MODEL_FEATURE_COLUMNS sync đúng với features train:
 ```python
 MODEL_FEATURE_COLUMNS = [
@@ -154,14 +155,6 @@ MODEL_FEATURE_COLUMNS = [
     'avg_comment_rating', 'neutral_ratio', 'sentiment_score'
 ]
 ```
-
-## ⚠️ Việc còn cần sửa trong app.py
-1. Dòng mô tả features (trang Mô hình dự đoán) vẫn đang ghi cũ:
-   > "giá bán, điểm đánh giá, lượt bán, số đánh giá, số bình luận và doanh thu ước tính"
-   → Sửa thành 6 features thực tế: price, review_count, comment_count, avg_comment_rating, neutral_ratio, sentiment_score
-
-2. Số hardcode trong trang Kết luận vẫn là 0.7736 / 80.81%
-   → Đọc động từ model_comparison.csv thay vì điền cứng
 
 ## Cấu trúc thư mục
 ```
@@ -214,11 +207,5 @@ TikiBookIntelligence-v2/
 | Streamlit không load model | Chạy train_product_classifier.py trước |
 | HDBSCAN ra ít cụm | Điều chỉnh `min_cluster_size` trong label_products.py |
 
-## 🗺️ Việc còn lại
-- [x] Sửa 2 chỗ sai trong app.py ✅
-- [ ] Push lên GitHub + Deploy Streamlit Cloud
-- [ ] Slide thuyết trình
-- [ ] Báo cáo kỹ thuật ✅ (đã viết với số thật)
-
 ---
-*Cập nhật lần cuối: 2026-05-17 — Thêm GridSearchCV, số liệu thật từ code chạy thật*
+*Cập nhật lần cuối: 2026-05-18 — Dự án hoàn chỉnh: pipeline, dashboard, deploy, báo cáo, slide*
